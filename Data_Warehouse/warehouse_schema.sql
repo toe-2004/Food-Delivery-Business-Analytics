@@ -21,7 +21,7 @@ CREATE TABLE dim_restaurant (
 );
 
 CREATE TABLE dim_time (
-    time_id INT NOT NULL PRIMARY KEY,
+    time_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     order_date DATE,
     day INT,
     month INT,

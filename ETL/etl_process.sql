@@ -10,9 +10,8 @@ INSERT INTO dim_restaurant (restaurant_id, name, city)
 SELECT restaurant_id, name, city
 FROM food_oltp1.restaurants;
 
-INSERT INTO dim_time (time_id, order_date, day, month, year)
+INSERT INTO dim_time (order_date, day, month, year)
 SELECT 
-    order_id AS time_id,
     order_date,
     DAY(order_date),
     MONTH(order_date),
@@ -25,9 +24,11 @@ SELECT
     o.user_id AS customer_id,
     oi.product_id,
     o.restaurant_id,
-    o.order_id AS time_id,
+    t.time_id,
     oi.quantity,
     (oi.quantity * oi.price) AS total_amount
 FROM food_oltp1.order_items oi
 JOIN food_oltp1.orders o 
-    ON oi.order_id = o.order_id;
+    ON oi.order_id = o.order_id
+JOIN dim_time t
+    ON o.order_date = t.order_date;
